@@ -1,0 +1,46 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+### Navigating over the Department of institutions to Analyze
+data = pd.read_csv("Department.csv",sep="\t")
+display(data)
+
+data.isnull()
+data.info()
+data.describe()
+### Looking at Department with the highest population of Student
+## First Finding the total of student in the data
+
+
+number_student = data.groupby("DEPARTMENT")["POPULATIONS OF STUDENT"].sum()
+display(pd.DataFrame(number_student))
+
+# Creating the visual aid of the data
+
+number_student.plot(kind="bar")
+plt.title("TOTAL POPULATIONS OF STUDENT IN EACH DEPARMENT")
+plt.xlabel("Department",color="blue")
+plt.ylabel("Populations of Department",color="red")
+plt.xticks(rotation=90)
+plt.show()
+
+### Looking at the salaries of the various department
+job_salary = data.groupby("JOB OFFERED IN THE VARIOUS DEPARTMENT")["SALARY OF JOB"].sum()
+display(pd.DataFrame(job_salary))
+
+# Creating the visual Aid 
+job_salary.plot(kind="bar")
+plt.title("JOB AND THEIR SALARIES COMPARISON",color="blue")
+plt.xlabel("Job Titles",color="red",fontsize="14")
+plt.ylabel("Salaries",color="blue",fontsize="13")
+plt.show()
+### Looking at the highest paying job globally
+global_job = data.groupby("GLOBALLY JOB")["JOB OFFERED IN THE VARIOUS DEPARTMENT"].value_counts()
+display(pd.DataFrame(global_job))
+
+# Creating the visual aid
+global_job.plot(kind="barh")
+plt.ylabel("Count of job globally")
+plt.tight_layout()
+plt.show()
